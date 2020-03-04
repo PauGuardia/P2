@@ -2,6 +2,8 @@ PAV - P2: detección de actividad vocal (VAD)
 Pau Guardia
 cualquier tontería
 David Linde
+David Linde
+cualquier tontería
 ============================================
 
 Esta práctica se distribuye a través del repositorio GitHub [Práctica 2](https://github.com/albino-pav/P2),
