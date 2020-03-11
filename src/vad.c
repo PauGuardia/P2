@@ -107,22 +107,22 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
     break;
 
   case ST_SILENCE:
-    if (f.p > 30)
+    if (f.p > (vad_data->last_feature+25))
       vad_data->state = ST_MaybeVOICE;
     break;
 
   case ST_MaybeVOICE:
-    if (f.p > 35)
+    if (f.p > (vad_data->last_feature+30))
       vad_data->state = ST_VOICE;
     break;
 
   case ST_VOICE:
-    if (f.p < 25)
+    if (f.p < (vad_data->last_feature+15))
       vad_data->state = ST_MaybeSILENCE;
     break;
 
   case ST_MaybeSILENCE:
-    if (f.p < 20)
+    if (f.p < (vad_data->last_feature+10))
       vad_data->state = ST_SILENCE;
     break;
 
@@ -131,7 +131,7 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
   }
 
   if (vad_data->state == ST_SILENCE ||
-      vad_data->state == ST_VOICE || vad_data->state == ST_MaybeSILENCE || vad_data->state == ST_MaybeVOICE)
+      vad_data->state == ST_VOICE)
     return vad_data->state;
   else
     return ST_UNDEF;
