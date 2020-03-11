@@ -3,8 +3,10 @@
 #include <stdio.h>
 
 #include "vad.h"
+#include "pav_analysis.h"
 
 const float FRAME_TIME = 10.0F; /* in ms. */
+const float fm= 16000;
 
 /* 
  * As the output state is only ST_VOICE, ST_SILENCE, or ST_UNDEF,
@@ -13,7 +15,7 @@ const float FRAME_TIME = 10.0F; /* in ms. */
  */
 
 const char *state_str[] = {
-    "UNDEF", "S", "V", "INIT"};
+    "UNDEF", "S", "V", "MS", "MV", "INIT"};
 
 const char *state2str(VAD_STATE st)
 {
@@ -32,11 +34,11 @@ typedef struct
  * TODO: Delete and use your own features!
  */
 
-Features compute_features(const float *x, int N, float fm)
+Features compute_features(const float *x, int N)
 {
   Features feat;
   feat.p = compute_power(x, N);
-  feat.zcr = compute_zcr(x, N, fm);
+  feat.zcr = compute_zcr(x, N,fm);
   feat.am = compute_am(x, N);
 
   /*

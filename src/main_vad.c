@@ -5,6 +5,7 @@
 
 #include "vad.h"
 #include "vad_docopt.h"
+#include "pav_analysis.h"
 
 #define DEBUG_VAD 0x1
 
@@ -78,6 +79,7 @@ int main(int argc, char *argv[]) {
     if  ((n_read = sf_read_float(sndfile_in, buffer, frame_size)) != frame_size) break;
 
     if (sndfile_out != 0) {
+
       /* TODO: copy all the samples into sndfile_out */
     }
 
