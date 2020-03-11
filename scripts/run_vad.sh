@@ -4,7 +4,7 @@
 # Use the nautilus explorer or chmod +x run_vad.sh
 
 
-DB=/home/david/PAV/P2/db.v4
+DB=/home/pau/PAV/P2/db.v4
 CMD=bin/vad  #write here the name and path of your program
 
 for filewav in $DB/*/*wav; do
