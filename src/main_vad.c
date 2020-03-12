@@ -84,6 +84,7 @@ int main(int argc, char *argv[]) {
     }
 
     state = vad(vad_data, buffer);
+    
     if (verbose & DEBUG_VAD) vad_show_state(vad_data, stdout);
 
     /* TODO: print only SILENCE and VOICE labels */
