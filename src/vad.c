@@ -119,12 +119,14 @@ vad_data->last_feature = f.p;
 
    /* vad_data->k0 = 10*log10( pow(10,vad_data->last_feature/10) /Ninit);*/
     
-
     vad_data->k1=vad_data->k0+15;
     vad_data->k2=vad_data->k0+35;
+   if(f.p > vad_data->k0){
     vad_data->state_time=vad_data->state_time+FRAME_TIME;
     vad_data->state = ST_SILENCE;
-   
+   }
+    
+    
     
     break;
 
