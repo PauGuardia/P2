@@ -108,7 +108,7 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
   Features f = compute_features(x, vad_data->frame_length);
  
 vad_data->last_feature = f.p;
-  /*vad_data->last_feature = vad_data->last_feature + f.p; /* save feature, in case you want to show 
+  /*vad_data->last_feature = vad_data->last_feature + f.p; save feature, in case you want to show 
   Ninit=Ninit+1;*/
   switch (vad_data->state)
   {
