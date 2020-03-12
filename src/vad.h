@@ -22,7 +22,10 @@ const char *state2str(VAD_STATE st);
 typedef struct
 {
    VAD_STATE state;
+   float k0,k1,k2;
+
    float sampling_rate;
+   float state_time;
    unsigned int frame_length;
    float last_feature; /* for debuggin purposes */
 } VAD_DATA;

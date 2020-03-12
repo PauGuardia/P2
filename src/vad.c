@@ -6,7 +6,7 @@
 #include "pav_analysis.h"
 
 const float FRAME_TIME = 10.0F; /* in ms. */
-const float fm= 16000;
+const float fm = 16000;
 
 /* 
  * As the output state is only ST_VOICE, ST_SILENCE, or ST_UNDEF,
@@ -38,7 +38,7 @@ Features compute_features(const float *x, int N)
 {
   Features feat;
   feat.p = compute_power(x, N);
-  feat.zcr = compute_zcr(x, N,fm);
+  feat.zcr = compute_zcr(x, N, fm);
   feat.am = compute_am(x, N);
 
   /*
@@ -62,6 +62,10 @@ VAD_DATA *vad_open(float rate)
 {
   VAD_DATA *vad_data = malloc(sizeof(VAD_DATA));
   vad_data->state = ST_INIT;
+  vad_data->k0=-100;
+  vad_data->k1=0;
+  vad_data->k2=0;
+  vad_data->state_time=0;
   vad_data->sampling_rate = rate;
   vad_data->frame_length = rate * FRAME_TIME * 1e-3;
   return vad_data;
@@ -97,48 +101,59 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
    * program finite state automaton, define conditions, etc.
    */
 
+  
   Features f = compute_features(x, vad_data->frame_length);
-  vad_data->last_feature = f.p; /* save feature, in case you want to show */
+ 
 
+  vad_data->last_feature = f.p; /* save feature, in case you want to show */
   switch (vad_data->state)
   {
   case ST_INIT:
+    vad_data->k0=f.p;
+    vad_data->k1=vad_data->k0+10;
+    vad_data->k2=vad_data->k0+20;
+    vad_data->state_time=vad_data->state_time+FRAME_TIME;
     vad_data->state = ST_SILENCE;
+   
+    
     break;
 
   case ST_SILENCE:
-    if (f.p > (vad_data->last_feature+25))
+    if (f.p > vad_data->k1)
       vad_data->state = ST_MaybeVOICE;
     break;
 
   case ST_MaybeVOICE:
-    if (f.p > (vad_data->last_feature+30))
+    if ((f.p > vad_data->k1 && vad_data->state_time > 50) || (f.p > vad_data->k2) ){   /* Sponemos que el tiempo maximo de una pausa breve es de 50 ms*/
       vad_data->state = ST_VOICE;
+    }  
+          
     break;
 
   case ST_VOICE:
-    if (f.p < (vad_data->last_feature+15))
+    if (f.p < vad_data->k2)
       vad_data->state = ST_MaybeSILENCE;
     break;
 
   case ST_MaybeSILENCE:
-    if (f.p < (vad_data->last_feature+10))
+    if ((f.p < vad_data->k2 && vad_data->state_time > 50) || (f.p < vad_data->k1))
       vad_data->state = ST_SILENCE;
     break;
 
   case ST_UNDEF:
     break;
   }
-
+  printf("%f %f %f\n",vad_data->k1,vad_data->k2,vad_data->k0);
   if (vad_data->state == ST_SILENCE ||
-      vad_data->state == ST_VOICE)
+      vad_data->state == ST_VOICE || vad_data->state == ST_MaybeSILENCE || vad_data->state == ST_MaybeVOICE)
     return vad_data->state;
   else
     return ST_UNDEF;
+
+
 }
 
 void vad_show_state(const VAD_DATA *vad_data, FILE *out)
 {
   fprintf(out, "%d\t%f\n", vad_data->state, vad_data->last_feature);
 }
-
