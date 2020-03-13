@@ -68,6 +68,7 @@ VAD_DATA *vad_open(float rate)
   vad_data->k1 = 0;
   vad_data->k2 = 0;
   vad_data->state_time = 0;
+  vad_data->last_feature = 0;
   vad_data->sampling_rate = rate;
   vad_data->frame_length = rate * FRAME_TIME * 1e-3;
   return vad_data;
@@ -96,7 +97,7 @@ unsigned int vad_frame_size(VAD_DATA *vad_data)
  */
 float pot = 0;
 int N = 0;
-float des=0;
+float des = 0;
 VAD_STATE vad(VAD_DATA *vad_data, float *x)
 {
   N++;
@@ -107,19 +108,23 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
 
   Features f = compute_features(x, vad_data->frame_length);
 
-  vad_data->last_feature = f.p;
-  pot = (pot * N + f.p) / (N + 1);
-  des= (f.p-pot)/N;
-  vad_data->k0 = pot;
-  vad_data->k1 = pot-des;
-  vad_data->k2 = pot+des;
+  
+
   switch (vad_data->state)
   {
   case ST_INIT:
-    if(f.p>vad_data->k1){
-      vad_data->state = ST_SILENCE;
+    if (vad_data->last_feature < f.p)
+    {
+      vad_data->k0 = f.p;
+      if (f.p > vad_data->last_feature + 5)
+      {
+        vad_data->k0=vad_data->last_feature;
+        vad_data->k1 = vad_data->k0 + 15;
+        vad_data->k2 = vad_data->k0 + 32;
+        vad_data->state = ST_SILENCE;
+      }
     }
-    
+
     break;
 
   case ST_SILENCE:
@@ -149,6 +154,7 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
   case ST_UNDEF:
     break;
   }
+  vad_data->last_feature = f.p;
   printf("%f %f %f\n", vad_data->k1, vad_data->k2, vad_data->k0);
   if (vad_data->state == ST_SILENCE || vad_data->state == ST_VOICE)
     return vad_data->state;
