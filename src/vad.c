@@ -7,8 +7,8 @@
 
 const float FRAME_TIME = 10.0F; /* in ms. */
 const float fm = 16000;
-int Ninit=0;
-float ten=10;
+int Ninit = 0;
+float ten = 10;
 
 /* 
  * As the output state is only ST_VOICE, ST_SILENCE, or ST_UNDEF,
@@ -63,12 +63,11 @@ Features compute_features(const float *x, int N)
 VAD_DATA *vad_open(float rate)
 {
   VAD_DATA *vad_data = malloc(sizeof(VAD_DATA));
-  Ninit=1;
   vad_data->state = ST_INIT;
-  vad_data->k0=-100;
-  vad_data->k1=0;
-  vad_data->k2=0;
-  vad_data->state_time=0;
+  vad_data->k0 = -100;
+  vad_data->k1 = 0;
+  vad_data->k2 = 0;
+  vad_data->state_time = 0;
   vad_data->sampling_rate = rate;
   vad_data->frame_length = rate * FRAME_TIME * 1e-3;
   return vad_data;
@@ -96,49 +95,43 @@ unsigned int vad_frame_size(VAD_DATA *vad_data)
  * using a Finite State Automata
  */
 
+
 VAD_STATE vad(VAD_DATA *vad_data, float *x)
 {
-
+  Ninit++;
   /* 
    * TODO: You can change this, using your own features,
    * program finite state automaton, define conditions, etc.
    */
 
-  
   Features f = compute_features(x, vad_data->frame_length);
- 
-  vad_data->last_feature = f.p;
-  
+
+  vad_data->last_feature = vad_data->last_feature + f.p;
+
   switch (vad_data->state)
   {
   case ST_INIT:
-    if (vad_data->last_feature < f.p){
-      vad_data->k0=f.p;
+    Ninit++;
+    if(f.p > vad_data->last_feature){
+      vad_data->k0= f.p;
     }
-
-   /* vad_data->k0 = 10*log10( pow(10,vad_data->last_feature/10) /Ninit);*/
-    vad_data->k1=vad_data->k0+5;
-    vad_data->k2=vad_data->k0+32;
-   if(f.p > vad_data->k0){
-    vad_data->state_time=vad_data->state_time+FRAME_TIME;
+    vad_data->k1 = vad_data->k0 + 15;
+    vad_data->k2 = vad_data->k0 + 40;
     vad_data->state = ST_SILENCE;
-   }
-    
-    
-    
     break;
 
   case ST_SILENCE:
-    Ninit=0;
+    Ninit = 0;
     if (f.p > vad_data->k1)
       vad_data->state = ST_MaybeVOICE;
     break;
 
   case ST_MaybeVOICE:
-    if ((f.p > vad_data->k1 && vad_data->state_time > 50) || (f.p > vad_data->k2) ){   /* Sponemos que el tiempo maximo de una pausa breve es de 50 ms*/
+    if ((f.p > vad_data->k1 && vad_data->state_time > 50) || (f.p > vad_data->k2))
+    { /* Sponemos que el tiempo maximo de una pausa breve es de 50 ms*/
       vad_data->state = ST_VOICE;
-    }  
-          
+    }
+
     break;
 
   case ST_VOICE:
@@ -154,13 +147,11 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
   case ST_UNDEF:
     break;
   }
-  /*printf("%f %f %f\n",vad_data->k1,vad_data->k2,vad_data->k0);*/
+  printf("%f %f %f\n", vad_data->k1, vad_data->k2, vad_data->k0);
   if (vad_data->state == ST_SILENCE || vad_data->state == ST_VOICE)
     return vad_data->state;
   else
     return ST_UNDEF;
-
-
 }
 
 void vad_show_state(const VAD_DATA *vad_data, FILE *out)
