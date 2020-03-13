@@ -119,8 +119,8 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
       if (f.p > vad_data->last_feature + 5)
       {
         vad_data->k0=vad_data->last_feature;
-        vad_data->k1 = vad_data->k0 + 15;
-        vad_data->k2 = vad_data->k0 + 32;
+        vad_data->k1 = vad_data->k0 + (f.p- vad_data->last_feature);
+        vad_data->k2 = vad_data->k1 + 10;
         vad_data->state = ST_SILENCE;
       }
     }
@@ -129,8 +129,11 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
 
   case ST_SILENCE:
     Ninit = 0;
-    if (f.p > vad_data->k1)
+    if (f.p > vad_data->k1){
+      
       vad_data->state = ST_MaybeVOICE;
+    }
+      
     break;
 
   case ST_MaybeVOICE:
@@ -142,8 +145,10 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
     break;
 
   case ST_VOICE:
-    if (f.p < vad_data->k2)
+    if (f.p < vad_data->k2){
       vad_data->state = ST_MaybeSILENCE;
+    }
+      
     break;
 
   case ST_MaybeSILENCE:
@@ -155,7 +160,7 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
     break;
   }
   vad_data->last_feature = f.p;
-  printf("%f %f %f\n", vad_data->k1, vad_data->k2, vad_data->k0);
+  printf("%f %f %f\n", vad_data->k0, vad_data->k1, vad_data->k2);
   if (vad_data->state == ST_SILENCE || vad_data->state == ST_VOICE)
     return vad_data->state;
   else
