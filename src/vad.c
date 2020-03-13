@@ -94,11 +94,12 @@ unsigned int vad_frame_size(VAD_DATA *vad_data)
  * TODO: Implement the Voice Activity Detection 
  * using a Finite State Automata
  */
-
-
+float pot = 0;
+int N = 0;
+float des=0;
 VAD_STATE vad(VAD_DATA *vad_data, float *x)
 {
-  Ninit++;
+  N++;
   /* 
    * TODO: You can change this, using your own features,
    * program finite state automaton, define conditions, etc.
@@ -106,18 +107,19 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
 
   Features f = compute_features(x, vad_data->frame_length);
 
-  vad_data->last_feature = vad_data->last_feature + f.p;
-
+  vad_data->last_feature = f.p;
+  pot = (pot * N + f.p) / (N + 1);
+  des= (f.p-pot)/N;
+  vad_data->k0 = pot;
+  vad_data->k1 = pot-des;
+  vad_data->k2 = pot+des;
   switch (vad_data->state)
   {
   case ST_INIT:
-    Ninit++;
-    if(f.p > vad_data->last_feature){
-      vad_data->k0= f.p;
+    if(f.p>vad_data->k1){
+      vad_data->state = ST_SILENCE;
     }
-    vad_data->k1 = vad_data->k0 + 15;
-    vad_data->k2 = vad_data->k0 + 40;
-    vad_data->state = ST_SILENCE;
+    
     break;
 
   case ST_SILENCE:
