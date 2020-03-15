@@ -116,6 +116,10 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
       {
         printf("Introducir automatico(0) o manual(1): ");
         scanf("%d", &automatic);
+        while (automatic!=0 && automatic!=1){
+          printf("Error al introducir, por favor introduce 0 (automatico) o 1(manual):");
+          scanf("%d", &automatic);
+        }
         if (automatic == 0)
         {
           vad_data->k0 = vad_data->last_feature;
