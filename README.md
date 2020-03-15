@@ -107,6 +107,7 @@ Ejercicios
       seguros de que un segmento de señal se corresponde con voz.
 
 	* Duración mínima razonable de los segmentos de voz y silencio.
+	> Observando el problema que podia surgir de decidir una pausa breve o un ruido lejano como silencio o voz hemos decidido incluir dos estados más, tal y como se nos indicaba en la práctica (Maybe_SILENCE o Maybe_VOICE). Se puede observar en el codigo que hemos decidido que como mucho se podría estar 50ms en un estado de duda, ya que creemos que si pasas más de 50 ms en este estado la conclusion que se podria obtener de cambiar de estado sería errónea, por lo que si pasan estos 50 ms el estado volverá a cambiar al estado anterior suponiendo que se trata de un segmento de pausa breve en el habla o de ruido en silencio.
 
 	* ¿Es capaz de sacar alguna conclusión a partir de la evolución de la tasa de cruces por cero?
 > Si observamos las gráficas anteriores, se observa que la que más variación contiene es la de la potencia. Se observa principalmente que al inicio de la grabación el nivel de potencia se encuentra muy bajo. Una vez se establece empieza lo que podríamos considerar silencio, que se encuentra ciertos dB por encima de este nivel esmentado. Por otro lado se observa que siempre que hay voz el nivel de potencia se encuentra muy por encima al nivel de silencio, con lo que creemos oportuno que si esta 5dB por encima del nivel del silencio se podrá considerar ya que habrá voz en ese instante.
