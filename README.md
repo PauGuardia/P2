@@ -108,6 +108,11 @@ Ejercicios
 	* Duración mínima razonable de los segmentos de voz y silencio.
 
 	* ¿Es capaz de sacar alguna conclusión a partir de la evolución de la tasa de cruces por cero?
+	
+> Si observamos las gráficas anteriores, se observa que la que más variación contiene es la de la potencia. Se observa principalmente que al inicio de la grabación el nivel de potencia se encuentra muy bajo. Una vez se establece empieza lo que podríamos considerar silencio, que se encuentra ciertos dB por encima de este nivel esmentado.
+Por otro lado se observa que siempre que hay voz el nivel de potencia se encuentra muy por encima al nivel de silencio, con lo que creemos oportuno que si esta 5dB por encima del nivel del silencio se podrá considerar ya que habrá voz en ese instante.
+
+> A partir del txt que generamos de la práctica anterior, hemos obtenido el ZCR del silencio inicia del .wav, basándonos en estos, no hemos podido destacar muchas condiciones, ya que no se visualizan gran cambios a lo largo del audio, y siempre se encuentran alrededor del nivel de silencio, unos fm/4. En nuestro audio no tenemos ninguna fricativa sorda, que nos harían observar un pico mucho mayor en este apartado.
 
 
 ### Desarrollo del detector de actividad vocal
@@ -117,13 +122,20 @@ Ejercicios
 
 - Inserte una gráfica en la que se vea con claridad la señal temporal, el etiquetado manual y la detección
   automática conseguida para el fichero grabado al efecto. 
+  
 
 
 - Explique, si existen. las discrepancias entre el etiquetado manual y la detección automática.
 
+Observamos que con los umbrales decididos se consigue un 97,118% de detección de nuestro fichero de audio. Esto es lo máximo que hemos podido obtener ajustando todos los parámetros de los umbrales y de los tiempos. 
+
+
 - Evalúe los resultados sobre la base de datos `db.v4` con el script `vad_evaluation.pl` e inserte a 
   continuación las tasas de sensibilidad (*recall*) y precisión para el conjunto de la base de datos (sólo
   el resumen).
+
+> En caso de todos los audios el máximo que obtenemos justo corresponde con los mismos valores con los que hemos obtenido nuestro 100% y se obtiene un 84,456%. Si observamos un poco todos los ficheros de audio que hemos intentado detectar se observa que un gran número de ficheros se encuentran entre 85% y el 95%, el problema está en que algunos, pocos, se encuentran cerca del 60% y entonces la media baja mucho.
+> El problema de estos puede ser tal y como se explica en la práctica, que el umbral k0 de donde decimos los otros dos, no sea el más óptimos, donde señales con potencias bajas no se detectan correctamente ya que la diferencia entre segmentos de voz y silencio no son muy elevadas.
 
 
 ### Trabajos de ampliación
@@ -145,8 +157,16 @@ Ejercicios
 - Indique a continuación si ha realizado algún tipo de aportación suplementaria (algoritmos de detección o 
   parámetros alternativos, etc.).
 
+> Como ampliación nuestra hemos decidido incluir que el usuario pueda decidir la generación de un umbral automático (poniendo un 0) o que lo entre manualmente (1).
+
+> A parte como se observa, nos hemos asegurado que en el caso de que el usuario se equivoque al teclear, si el número introducido no es ni 0 ni 1, salta un mensaje de error para que se introduzca un número nuevo y así el programa no entra en colapso. 
+
+
 - Si lo desea, puede realizar también algún comentario acerca de la realización de la práctica que considere
   de interés de cara a su evaluación.
+> Podemos decir que nuestro archivo de audio lo hemos optimizado al máximo consiguiendo de forma automática un 97,1 %. Lo cual es imperceptible si rellenamos el silencio en forma de ceros en un archivo de audio generado por nuestro código. 
+Por otra parte, en la base de datos, hemos obtenido un 84,4%.
+ En algunos casos, obtenemos un porcentaje mayor del 90% y en otros, un poco inferior del 80%. Aunque la mayoría de casos, los resultados estaban alrededor del 85 %.  
 
 
 ### Antes de entregar la práctica
