@@ -115,7 +115,8 @@ VAD_STATE vad(VAD_DATA *vad_data, float *x)
       vad_data->k0 = f.p;
       if (f.p > vad_data->last_feature + 5)
       {
-        vad_data->k0 = vad_data->last_feature;
+        printf("Introducir k0 (nivel de potencia primeras tramas): \n");
+        scanf("%f", &vad_data->k0);
         vad_data->k1 = vad_data->k0 + (f.p - vad_data->last_feature) - 2;
         vad_data->k2 = vad_data->k1 + 5;
         vad_data->state = ST_SILENCE;

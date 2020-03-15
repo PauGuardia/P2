@@ -90,6 +90,7 @@ int main(int argc, char *argv[])
 
     if (sndfile_out != 0)
     {
+      sf_write_float(sndfile_out, buffer, frame_size);
 
       /* TODO: copy all the samples into sndfile_out */
     }
@@ -125,6 +126,9 @@ int main(int argc, char *argv[])
 
     if (sndfile_out != 0)
     {
+      if(state==ST_SILENCE){
+        sf_write_float(sndfile_out, buffer_zeros,frame_size);
+      }
       /* TODO: go back and write zeros in silence segments */
     }
   }
