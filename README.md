@@ -177,7 +177,7 @@ De esta forma, estábamos seguros de que el código hacia lo que queríamos.
 - Si lo desea, puede realizar también algún comentario acerca de la realización de la práctica que considere
   de interés de cara a su evaluación.
   
-> CONCLUSION FINAL
+> CONCLUSION FINAL:
 > Podemos decir que nuestro archivo de audio lo hemos optimizado al máximo consiguiendo de forma automática un 97,1 %. Lo cual es imperceptible si rellenamos el silencio en forma de ceros en un archivo de audio generado por nuestro código. Por otra parte, en la base de datos, hemos obtenido un 84,4%. En algunos casos, obtenemos un porcentaje mayor del 90% y en otros, un poco inferior del 80%. Aunque la mayoría de casos, los resultados estaban alrededor del 85 %.
 
 ### Antes de entregar la práctica
