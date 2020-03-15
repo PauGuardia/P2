@@ -99,6 +99,7 @@ Ejercicios
   continuación, una captura de `wavesurfer` en la que se vea con claridad la señal temporal, el contorno de
   potencia y la tasa de cruces por cero, junto con el etiquetado manual de los segmentos.
 
+![Imagen del Wavesurfer](https://github.com/PauGuardia/P2/blob/Guardia-Linde/src/wavesurfer.png)
 
 - A la vista de la gráfica, indique qué valores considera adecuados para las magnitudes siguientes:
 
@@ -119,12 +120,21 @@ Ejercicios
 
 - Inserte una gráfica en la que se vea con claridad la señal temporal, el etiquetado manual y la detección
   automática conseguida para el fichero grabado al efecto. 
+  
+  ![Imagen del Wavesurfer](https://github.com/PauGuardia/P2/blob/Guardia-Linde/src/labvsotro.PNG)
 
 - Explique, si existen. las discrepancias entre el etiquetado manual y la detección automática.
+
+> En nuestro caso, la exactitud es del 97,1 % . Asi que en nuestro caso, las diferencies son imperceptibles. 
+
+![](https://github.com/PauGuardia/P2/blob/Guardia-Linde/src/97.PNG)
 
 - Evalúe los resultados sobre la base de datos `db.v4` con el script `vad_evaluation.pl` e inserte a 
   continuación las tasas de sensibilidad (*recall*) y precisión para el conjunto de la base de datos (sólo
   el resumen).
+  
+  ![](https://github.com/PauGuardia/P2/blob/Guardia-Linde/src/84.PNG)
+  
   
   > En caso de todos los audios el máximo que obtenemos justo corresponde con los mismos valores con los que hemos obtenido nuestro 100% y se obtiene un 84,456%. Si observamos un poco todos los ficheros de audio que hemos intentado detectar se observa que un gran número de ficheros se encuentran entre 85% y el 95%, el problema está en que algunos, pocos, se encuentran cerca del 60% y entonces la media baja mucho. El problema de estos puede ser tal y como se explica en la práctica, que el umbral k0 de donde decimos los otros dos, no sea el más óptimos, donde señales con potencias bajas no se detectan correctamente ya que la diferencia entre segmentos de voz y silencio no son muy elevadas.
 
@@ -137,6 +147,8 @@ Ejercicios
   la que se vea con claridad la señal antes y después de la cancelación (puede que `wavesurfer` no sea la
   mejor opción para esto, ya que no es capaz de visualizar varias señales al mismo tiempo).
 
+ ![](https://github.com/PauGuardia/P2/blob/Guardia-Linde/src/cero.PNG)
+
 #### Gestión de las opciones del programa usando `docopt_c`
 
 - Si ha usado `docopt_c` para realizar la gestión de las opciones y argumentos del programa `vad`, inserte
@@ -148,9 +160,14 @@ Ejercicios
 - Indique a continuación si ha realizado algún tipo de aportación suplementaria (algoritmos de detección o 
   parámetros alternativos, etc.).
   
+   ![](https://github.com/PauGuardia/P2/blob/Guardia-Linde/src/elegir.PNG)
+  
   > Como ampliación nuestra hemos decidido incluir que el usuario pueda decidir la generación de un umbral automático (poniendo un 0) o que lo entre manualmente (1).
 
 > A parte como se observa, nos hemos asegurado que en el caso de que el usuario se equivoque al teclear, si el número introducido no es ni 0 ni 1, salta un mensaje de error para que se introduzca un número nuevo y así el programa no entra en colapso.
+
+   ![](https://github.com/PauGuardia/P2/blob/Guardia-Linde/src/error.PNG)
+
 
 - Si lo desea, puede realizar también algún comentario acerca de la realización de la práctica que considere
   de interés de cara a su evaluación.
