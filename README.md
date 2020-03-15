@@ -148,6 +148,7 @@ Ejercicios
   mejor opción para esto, ya que no es capaz de visualizar varias señales al mismo tiempo).
 
  ![](https://github.com/PauGuardia/P2/blob/Guardia-Linde/src/cero.PNG)
+> En esta imagen observamos como se genera un fichero de salida si el usuario entra por pantalla que quiere que se guarde la información detectada en uno.
  ![](https://github.com/PauGuardia/P2/blob/Guardia-Linde/src/out.jpeg)
 > Se puede observar que cuando hay un silencio, el valor de la señal es un cero.  
 > Para realizar una última comprobación, hicimos a propósito, un ejemplo con umbrales mal elegidos, entonces, el fichero de audio generado era de muy mala calidad y de difícil entendimiento.
