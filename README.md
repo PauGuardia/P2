@@ -136,7 +136,7 @@ Ejercicios
   ![](https://github.com/PauGuardia/P2/blob/Guardia-Linde/src/84.PNG)
   
   
-  > En caso de todos los audios el máximo que obtenemos justo corresponde con los mismos valores con los que hemos obtenido nuestro 100% y se obtiene un 84,456%. Si observamos un poco todos los ficheros de audio que hemos intentado detectar se observa que un gran número de ficheros se encuentran entre 85% y el 95%, el problema está en que algunos, pocos, se encuentran cerca del 60% y entonces la media baja mucho. El problema de estos puede ser tal y como se explica en la práctica, que el umbral k0 de donde decimos los otros dos, no sea el más óptimos, donde señales con potencias bajas no se detectan correctamente ya que la diferencia entre segmentos de voz y silencio no son muy elevadas.
+  > En caso de todos los audios el máximo que obtenemos justo corresponde con los mismos valores con los que hemos obtenido nuestro 97,1% y se obtiene un 84,456%. Si observamos un poco todos los ficheros de audio que hemos intentado detectar se observa que un gran número de ficheros se encuentran entre 85% y el 95%, el problema está en que algunos, pocos, se encuentran cerca del 60% y entonces la media baja mucho. El problema de estos puede ser tal y como se explica en la práctica, que el umbral k0 de donde decimos los otros dos, no sea el más óptimos, donde señales con potencias bajas no se detectan correctamente ya que la diferencia entre segmentos de voz y silencio no son muy elevadas.
 
 
 ### Trabajos de ampliación
@@ -148,6 +148,11 @@ Ejercicios
   mejor opción para esto, ya que no es capaz de visualizar varias señales al mismo tiempo).
 
  ![](https://github.com/PauGuardia/P2/blob/Guardia-Linde/src/cero.PNG)
+ ![](https://github.com/PauGuardia/P2/blob/Guardia-Linde/src/out.jpeg)
+> Se puede observar que cuando hay un silencio, el valor de la señal es un cero.  
+> Para realizar una última comprobación, hicimos a propósito, un ejemplo con umbrales mal elegidos, entonces, el fichero de audio generado era de muy mala calidad y de difícil entendimiento.
+De esta forma, estábamos seguros de que el código hacia lo que queríamos.  
+
 
 #### Gestión de las opciones del programa usando `docopt_c`
 
@@ -172,6 +177,7 @@ Ejercicios
 - Si lo desea, puede realizar también algún comentario acerca de la realización de la práctica que considere
   de interés de cara a su evaluación.
   
+> CONCLUSION FINAL
 > Podemos decir que nuestro archivo de audio lo hemos optimizado al máximo consiguiendo de forma automática un 97,1 %. Lo cual es imperceptible si rellenamos el silencio en forma de ceros en un archivo de audio generado por nuestro código. Por otra parte, en la base de datos, hemos obtenido un 84,4%. En algunos casos, obtenemos un porcentaje mayor del 90% y en otros, un poco inferior del 80%. Aunque la mayoría de casos, los resultados estaban alrededor del 85 %.
 
 ### Antes de entregar la práctica
