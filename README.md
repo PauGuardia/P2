@@ -188,6 +188,9 @@ De esta forma, estábamos seguros de que el código hacia lo que queríamos.
 >
 > Finalmente, podemos decir que nuestro archivo de audio lo hemos optimizado al máximo consiguiendo de forma automática un 97,1 %. Lo cual es imperceptible si rellenamos el silencio en forma de ceros en un archivo de audio generado por nuestro código. Por otra parte, en la base de datos, hemos obtenido un 84,4%. En algunos casos, obtenemos un porcentaje mayor del 90% y en otros, un poco inferior del 80%. Aunque la mayoría de casos, los resultados estaban alrededor del 85 %. A parte nos gustaría comentar que hay algunos audios que se obtiene un 65%, cosa que creemos que es por el hecho de tener una potencia de señal muy baja por lo que nuestros umbrales no son del todo correctos.
 
+> ANEXO : 
+> Si no quieres que al realizar el test con tu librería, te pregunte constantemente si quieres automático o manual, si quieres contacta con nosotros y te proporcionamos el código sin esa función. También lo puedes modificar comentando la parte de la pregunta y quitando el while.  
+
 ### Antes de entregar la práctica
 
 Recuerde comprobar que el repositorio cuenta con los códigos correctos y en condiciones de ser 
